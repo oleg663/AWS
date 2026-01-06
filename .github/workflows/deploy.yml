@@ -1,4 +1,4 @@
-name: Deploy CI/CD Site
+name: Deploy Medical Website
 
 on:
   push:
@@ -16,32 +16,30 @@ jobs:
         echo "${{ secrets.AWS_SSH_KEY }}" > ~/.ssh/deploy_key
         chmod 600 ~/.ssh/deploy_key
     
-    - name: Deploy files (simple scp)
+    - name: Fix permissions on server
       run: |
-        # Копіюємо тільки потрібні файли
-        scp -i ~/.ssh/deploy_key \
+        ssh -i ~/.ssh/deploy_key \
           -o StrictHostKeyChecking=no \
-          index.html \
-          ${{ secrets.AWS_USER }}@${{ secrets.AWS_HOST }}:/var/www/my-site/
-        
-        scp -i ~/.ssh/deploy_key \
-          -o StrictHostKeyChecking=no \
-          about.html \
-          ${{ secrets.AWS_USER }}@${{ secrets.AWS_HOST }}:/var/www/my-site/
-        
-        # CSS директорія
-        scp -i ~/.ssh/deploy_key \
-          -o StrictHostKeyChecking=no \
-          -r css/ \
-          ${{ secrets.AWS_USER }}@${{ secrets.AWS_HOST }}:/var/www/my-site/
-        
-        # JS директорія  
-        scp -i ~/.ssh/deploy_key \
-          -o StrictHostKeyChecking=no \
-          -r js/ \
-          ${{ secrets.AWS_USER }}@${{ secrets.AWS_HOST }}:/var/www/my-site/
+          ${{ secrets.AWS_USER }}@${{ secrets.AWS_HOST }} \
+          "sudo chown -R ${{ secrets.AWS_USER }}:${{ secrets.AWS_USER }} /var/www/my-site && \
+           sudo chmod -R 775 /var/www/my-site"
     
-    - name: Set final permissions
+    - name: Deploy medical website files
+      run: |
+        # Копіюємо файли по одному
+        FILES="index.html about.html css js assets"
+        
+        for item in $FILES; do
+          if [ -d "$item" ] || [ -f "$item" ]; then
+            echo "Копіювання $item..."
+            scp -i ~/.ssh/deploy_key \
+              -o StrictHostKeyChecking=no \
+              -r "$item" \
+              ${{ secrets.AWS_USER }}@${{ secrets.AWS_HOST }}:/var/www/my-site/ || echo "Помилка з $item"
+          fi
+        done
+    
+    - name: Set final permissions for nginx
       run: |
         ssh -i ~/.ssh/deploy_key \
           -o StrictHostKeyChecking=no \
@@ -51,8 +49,8 @@ jobs:
            sudo find /var/www/my-site -type d -exec chmod 755 {} \; && \
            sudo systemctl reload nginx"
     
-    - name: Verify
+    - name: Verify deployment
       run: |
-        echo "✅ Деплой завершено!"
-        echo "🌐 Сайт: http://${{ secrets.AWS_HOST }}"
-        echo "📁 Файли: /var/www/my-site/"
+        echo "✅ Медичний сайт задеплоєно!"
+        echo "🌐 Відкрийте: http://${{ secrets.AWS_HOST }}"
+        echo "🏥 Тема: Перша медична допомога"
