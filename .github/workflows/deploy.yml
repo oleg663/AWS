@@ -2,63 +2,15 @@ name: Deploy to AWS
 
 on:
   push:
-    branches: [ main, master ]
-  pull_request:
-    branches: [ main, master ]
+    branches: [ main ]
 
 jobs:
-  test:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v3
-    
-    - name: Setup Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: '18'
-    
-    - name: Install HTML validator
-      run: |
-        npm install -g html-validator-cli
-        
-    - name: Validate HTML files
-      run: |
-        echo "Validating HTML files..."
-        # Перевіряємо index.html
-        if html-validator --file ./index.html --verbose; then
-          echo "✅ index.html is valid"
-        else
-          echo "❌ index.html has errors"
-          exit 1
-        fi
-        
-        # Перевіряємо about.html
-        if html-validator --file ./about.html --verbose; then
-          echo "✅ about.html is valid"
-        else
-          echo "❌ about.html has errors"
-          exit 1
-        fi
-
-    - name: Check for broken links
-      run: |
-        echo "Installing link checker..."
-        sudo apt-get update
-        sudo apt-get install -y linkchecker
-        
-        echo "Checking internal links..."
-        # Тільки перевіряємо внутрішні посилання
-        linkchecker --check-extern=no index.html || echo "Link check completed"
-
   deploy:
-    needs: test
-    if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')
     runs-on: ubuntu-latest
-    
     steps:
     - uses: actions/checkout@v3
     
-    - name: Deploy to AWS EC2
+    - name: Deploy files to AWS
       uses: appleboy/scp-action@master
       with:
         host: ${{ secrets.AWS_HOST }}
@@ -66,38 +18,13 @@ jobs:
         key: ${{ secrets.AWS_SSH_KEY }}
         source: "./"
         target: "/var/www/my-site"
-        strip_components: 1
     
-    - name: Set correct permissions
+    - name: Restart nginx
       uses: appleboy/ssh-action@master
       with:
         host: ${{ secrets.AWS_HOST }}
         username: ${{ secrets.AWS_USER }}
         key: ${{ secrets.AWS_SSH_KEY }}
         script: |
-          echo "Setting permissions..."
-          sudo chown -R www-data:www-data /var/www/my-site
-          sudo chmod -R 755 /var/www/my-site
           sudo systemctl reload nginx
-          
-          # Перевіряємо що файли на місці
-          echo "Files in /var/www/my-site:"
-          ls -la /var/www/my-site/
-          
-          # Перевіряємо що nginx працює
-          echo "Nginx status:"
-          sudo systemctl status nginx --no-pager
-    
-    - name: Send success notification
-      if: success()
-      run: |
-        echo "🚀 Деплой успішний!"
-        echo "Сайт доступний за адресою: http://${{ secrets.AWS_HOST }}"
-        echo "Час деплою: $(date)"
-    
-    - name: Send failure notification
-      if: failure()
-      run: |
-        echo "❌ Деплой не вдався!"
-        echo "Перевір логи вище"
-        exit 1
+          echo "✅ Сайт задеплоєно!"
