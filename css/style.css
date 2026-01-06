@@ -985,3 +985,204 @@ body {
     opacity: 0.8;
     text-align: center;
 }
+
+/* =========================================== */
+/* МОБІЛЬНІ ВИПРАВЛЕННЯ - ДОДАТКОВІ СТИЛІ */
+/* =========================================== */
+
+/* Фікс для viewport на iOS */
+@supports (-webkit-touch-callout: none) {
+  .hero, .section {
+    min-height: -webkit-fill-available;
+  }
+}
+
+/* Мобільна навігація */
+@media (max-width: 768px) {
+  /* Контейнер для мобільних */
+  .container {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+  
+  /* Навігація */
+  .navbar .container {
+    flex-direction: column;
+    padding: 10px 0;
+  }
+  
+  .nav-links {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 15px;
+    width: 100%;
+  }
+  
+  .nav-link {
+    padding: 8px 12px;
+    font-size: 14px;
+  }
+  
+  /* Герой секція */
+  .hero {
+    padding: 30px 0;
+  }
+  
+  .hero-title {
+    font-size: 28px !important;
+    line-height: 1.3;
+  }
+  
+  .hero-subtitle {
+    font-size: 16px;
+    margin-bottom: 25px;
+  }
+  
+  .hero-stats {
+    grid-template-columns: 1fr;
+    gap: 15px;
+    margin-bottom: 25px;
+  }
+  
+  .stat {
+    flex-direction: column;
+    text-align: center;
+    padding: 15px;
+  }
+  
+  /* ВІДЕО - НАЙВАЖЛИВІШЕ ВИПРАВЛЕННЯ */
+  .video-player iframe {
+    height: 250px !important;
+  }
+  
+  .video-header .section-title {
+    font-size: 24px !important;
+  }
+  
+  .featured-video {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  
+  .video-info h3 {
+    font-size: 20px;
+  }
+  
+  /* Загальні секції */
+  .section {
+    padding: 40px 0;
+  }
+  
+  .section-title {
+    font-size: 26px;
+    margin-bottom: 25px;
+  }
+  
+  /* Принципи - одна колонка */
+  .principles-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  /* Таби - кращий вигляд */
+  .injuries-tabs {
+    flex-wrap: wrap;
+  }
+  
+  .tab-btn {
+    flex: 1;
+    min-width: 45%;
+    margin-bottom: 5px;
+  }
+  
+  /* Алгоритми - одна колонка */
+  .algorithm-cards {
+    grid-template-columns: 1fr;
+  }
+  
+  /* Аптечка - одна колонка */
+  .kit-items {
+    grid-template-columns: 1fr;
+  }
+  
+  /* Контакти - одна колонка */
+  .emergency-contacts {
+    grid-template-columns: 1fr;
+  }
+  
+  /* Футер */
+  .footer-content {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+  
+  /* Кнопки більші для тачскріна */
+  button, .cta-button, .video-action-btn, .tab-btn {
+    min-height: 44px;
+    padding: 12px 20px;
+  }
+}
+
+/* Для дуже маленьких телефонів */
+@media (max-width: 480px) {
+  .hero-title {
+    font-size: 24px !important;
+  }
+  
+  .video-player iframe {
+    height: 200px !important;
+  }
+  
+  .tab-btn {
+    min-width: 100%;
+  }
+  
+  .phone-number {
+    font-size: 28px;
+  }
+}
+
+/* Виправлення для зображень на мобільних */
+@media (max-width: 768px) {
+  .principle-image,
+  .kit-sub-image,
+  .full-image {
+    height: auto;
+    max-height: 200px;
+  }
+}
+
+/* Фікс для відео iframe - робимо його справді адаптивним */
+.video-player {
+  position: relative;
+  padding-bottom: 56.25%; /* 16:9 співвідношення */
+  height: 0;
+  overflow: hidden;
+  background: #000;
+}
+
+.video-player iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+/* Запобігання горизонтальному скролу */
+html, body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+/* Краща доступність для тач-пристроїв */
+@media (hover: none) and (pointer: coarse) {
+  .nav-link, .tab-btn, button {
+    padding: 12px 16px;
+  }
+  
+  input, select, textarea {
+    font-size: 16px; /* Запобігає автоматичному збільшенню в iOS */
+  }
+}

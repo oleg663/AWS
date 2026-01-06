@@ -187,3 +187,75 @@ document.addEventListener('DOMContentLoaded', function() {
     console.log('%cВаші знання можуть врятувати життя!', 'color: #457b9d;');
     console.log('%c📞 Запам\'ятайте: Швидка - 103, Поліція - 102, Пожежна - 101', 'color: #2a9d8f;');
 });
+
+// ===========================================
+// МОБІЛЬНІ ВИПРАВЛЕННЯ - ДОДАТКОВИЙ JS
+// ===========================================
+
+// Функція для оптимізації на мобільних
+function optimizeForMobile() {
+  // Перевіряємо, чи це мобільний пристрій
+  const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|Windows Phone/i.test(navigator.userAgent);
+  
+  if (isMobile) {
+    console.log('Мобільна оптимізація активована');
+    
+    // Фікс для 100vh на iOS
+    function setRealVH() {
+      const vh = window.innerHeight * 0.01;
+      document.documentElement.style.setProperty('--real-vh', `${vh}px`);
+    }
+    
+    window.addEventListener('resize', setRealVH);
+    setRealVH();
+    
+    // Оптимізація відео для мобільних
+    const videoIframes = document.querySelectorAll('iframe[src*="youtube"]');
+    videoIframes.forEach(iframe => {
+      // Додаємо мобільні параметри
+      let src = iframe.src;
+      if (src && !src.includes('playsinline=1')) {
+        src += (src.includes('?') ? '&' : '?') + 'playsinline=1';
+        iframe.src = src;
+      }
+    });
+    
+    // Зменшуємо анімації для кращої продуктивності
+    document.body.classList.add('mobile-device');
+  }
+}
+
+// Викликаємо при завантаженні
+document.addEventListener('DOMContentLoaded', optimizeForMobile);
+
+// Фікс для iOS Safari - запобігаємо подвійному тапу для зуму
+let lastTap = 0;
+document.addEventListener('touchend', function(event) {
+  const currentTime = new Date().getTime();
+  const tapLength = currentTime - lastTap;
+  
+  if (tapLength < 500 && tapLength > 0) {
+    event.preventDefault();
+  }
+  
+  lastTap = currentTime;
+});
+
+// Плавний скрол для мобільних
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function(e) {
+    const href = this.getAttribute('href');
+    
+    if (href !== '#') {
+      e.preventDefault();
+      const targetElement = document.querySelector(href);
+      
+      if (targetElement) {
+        window.scrollTo({
+          top: targetElement.offsetTop - 100,
+          behavior: 'smooth'
+        });
+      }
+    }
+  });
+});
