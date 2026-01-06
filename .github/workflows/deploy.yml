@@ -1,9 +1,43 @@
-- name: Deploy
-  uses: appleboy/scp-action@master
-  with:
-    host: ${{ secrets.AWS_HOST }}
-    username: ${{ secrets.AWS_USER }}
-    key: ${{ secrets.AWS_SSH_KEY }}
-    source: "./"
-    target: "/var/www/my-site"
-    rm: true  # Видали перед копіюванням
+name: Deploy with Cleanup
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Setup SSH
+      run: |
+        mkdir -p ~/.ssh
+        echo "${{ secrets.AWS_SSH_KEY }}" > ~/.ssh/id_rsa
+        chmod 600 ~/.ssh/id_rsa
+        echo "StrictHostKeyChecking no" > ~/.ssh/config
+    
+    - name: Clean remote directory
+      run: |
+        ssh ${{ secrets.AWS_USER }}@${{ secrets.AWS_HOST }} \
+          "sudo rm -rf /var/www/my-site/* 2>/dev/null || true"
+    
+    - name: Copy files
+      run: |
+        scp -r \
+          --exclude '.git' \
+          --exclude '.github/workflows' \
+          ./* \
+          ${{ secrets.AWS_USER }}@${{ secrets.AWS_HOST }}:/var/www/my-site/
+    
+    - name: Set permissions
+      run: |
+        ssh ${{ secrets.AWS_USER }}@${{ secrets.AWS_HOST }} \
+          "sudo chown -R www-data:www-data /var/www/my-site && \
+           sudo chmod -R 755 /var/www/my-site && \
+           sudo systemctl reload nginx"
+    
+    - name: Verify
+      run: |
+        echo "✅ Деплой завершено!"
+        echo "Сайт: http://${{ secrets.AWS_HOST }}"
