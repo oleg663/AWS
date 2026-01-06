@@ -1,14 +1,239 @@
 <!DOCTYPE html>
-<html>
+<html lang="uk">
 <head>
-    <title>CI/CD Test</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CI/CD Pipeline Demo | AWS + GitHub</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <h1>✅ CI/CD працює!</h1>
-    <p>Якщо бачиш це, деплой успішний!</p>
-    <p>Час: <span id="time">...</span></p>
-    <script>
-        document.getElementById('time').textContent = new Date().toLocaleString();
-    </script>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="#" class="logo">
+                <i class="fas fa-rocket"></i>
+                <span>DevOps<span class="logo-highlight">Demo</span></span>
+            </a>
+            <div class="nav-links">
+                <a href="#features" class="nav-link">Фічі</a>
+                <a href="#pipeline" class="nav-link">Пайплайн</a>
+                <a href="#tech" class="nav-link">Технології</a>
+                <a href="https://github.com/oleg663/AWS" target="_blank" class="nav-link github-link">
+                    <i class="fab fa-github"></i> GitHub
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">
+                    <span class="title-gradient">CI/CD Pipeline</span><br>
+                    від GitHub до AWS
+                </h1>
+                <p class="hero-subtitle">
+                    Автоматичний деплой статичного сайту при кожному коміті.
+                    Практика DevOps у дії!
+                </p>
+                <div class="hero-stats">
+                    <div class="stat">
+                        <i class="fas fa-bolt"></i>
+                        <div>
+                            <h3 id="deploy-time">--</h3>
+                            <p>Останній деплой</p>
+                        </div>
+                    </div>
+                    <div class="stat">
+                        <i class="fas fa-check-circle"></i>
+                        <div>
+                            <h3 id="status">Успішно</h3>
+                            <p>Статус</p>
+                        </div>
+                    </div>
+                    <div class="stat">
+                        <i class="fas fa-server"></i>
+                        <div>
+                            <h3>AWS EC2</h3>
+                            <p>Інфраструктура</p>
+                        </div>
+                    </div>
+                </div>
+                <button id="refresh-btn" class="cta-button">
+                    <i class="fas fa-sync-alt"></i> Оновити статус
+                </button>
+            </div>
+            <div class="hero-visual">
+                <div class="pipeline-animation">
+                    <div class="pipeline-step">
+                        <div class="step-icon"><i class="fab fa-github"></i></div>
+                        <p class="step-label">Git Push</p>
+                    </div>
+                    <div class="pipeline-arrow">→</div>
+                    <div class="pipeline-step">
+                        <div class="step-icon"><i class="fas fa-play-circle"></i></div>
+                        <p class="step-label">GitHub Actions</p>
+                    </div>
+                    <div class="pipeline-arrow">→</div>
+                    <div class="pipeline-step">
+                        <div class="step-icon"><i class="fas fa-cloud-upload-alt"></i></div>
+                        <p class="step-label">SCP до AWS</p>
+                    </div>
+                    <div class="pipeline-arrow">→</div>
+                    <div class="pipeline-step">
+                        <div class="step-icon"><i class="fas fa-check-double"></i></div>
+                        <p class="step-label">Сайт живий!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <div class="container">
+            <h2 class="section-title">Що демонструє цей проект</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-code-branch"></i>
+                    </div>
+                    <h3>Git Workflow</h3>
+                    <p>Автоматизація при кожному push в main гілку. Практика Git потоку.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-cogs"></i>
+                    </div>
+                    <h3>GitHub Actions</h3>
+                    <p>Налаштування CI/CD пайплайнів без додаткових інструментів.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Безпека</h3>
+                    <p>Використання Secrets для SSH ключів та конфіденційних даних.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-server"></i>
+                    </div>
+                    <h3>AWS Infra</h3>
+                    <p>Робота з EC2, Security Groups, SSH, та веб-серверами.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pipeline Section -->
+    <section id="pipeline" class="pipeline">
+        <div class="container">
+            <h2 class="section-title">Як працює пайплайн</h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-marker">1</div>
+                    <div class="timeline-content">
+                        <h3>Локальна розробка</h3>
+                        <p>Розробка на локальному комп'ютері з використанням Git для контролю версій.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-marker">2</div>
+                    <div class="timeline-content">
+                        <h3>Push на GitHub</h3>
+                        <p>Код пушиться на GitHub, що запускає GitHub Actions workflow.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-marker">3</div>
+                    <div class="timeline-content">
+                        <h3>Автоматичний деплой</h3>
+                        <p>GitHub Actions підключається до AWS через SSH та деплоїть файли.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-marker">4</div>
+                    <div class="timeline-content">
+                        <h3>Сайт оновлено</h3>
+                        <p>Nginx автоматично віддає нові файли. Сайт оновлено без downtime.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tech Stack -->
+    <section id="tech" class="tech">
+        <div class="container">
+            <h2 class="section-title">Технологічний стек</h2>
+            <div class="tech-grid">
+                <div class="tech-item">
+                    <i class="fab fa-aws fa-3x"></i>
+                    <h3>AWS EC2</h3>
+                    <p>Віртуальний сервер на Amazon Web Services</p>
+                </div>
+                <div class="tech-item">
+                    <i class="fab fa-ubuntu fa-3x"></i>
+                    <h3>Ubuntu 22.04</h3>
+                    <p>Операційна система сервера</p>
+                </div>
+                <div class="tech-item">
+                    <i class="fab fa-github fa-3x"></i>
+                    <h3>GitHub Actions</h3>
+                    <p>CI/CD пайплайн автоматизація</p>
+                </div>
+                <div class="tech-item">
+                    <i class="fas fa-code fa-3x"></i>
+                    <h3>HTML/CSS/JS</h3>
+                    <p>Сучасний статичний веб-сайт</p>
+                </div>
+                <div class="tech-item">
+                    <i class="fas fa-network-wired fa-3x"></i>
+                    <h3>Nginx</h3>
+                    <p>Високопродуктивний веб-сервер</p>
+                </div>
+                <div class="tech-item">
+                    <i class="fas fa-terminal fa-3x"></i>
+                    <h3>SSH/SCP</h3>
+                    <p>Безпечне підключення та передача файлів</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>CI/CD Demo Project</h3>
+                    <p>Практичний проект для демонстрації автоматизації деплою.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Статус системи</h3>
+                    <p>Сервер: <span id="server-status" class="status-online">● Онлайн</span></p>
+                    <p>Останнє оновлення: <span id="last-update">--</span></p>
+                </div>
+                <div class="footer-section">
+                    <h3>Корисні посилання</h3>
+                    <a href="https://github.com/oleg663/AWS" target="_blank" class="footer-link">
+                        <i class="fab fa-github"></i> Репозиторій
+                    </a>
+                    <a href="https://docs.github.com/en/actions" target="_blank" class="footer-link">
+                        <i class="fas fa-book"></i> GitHub Actions Docs
+                    </a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2024 CI/CD Pipeline Demo | Практика DevOps | Оновлено: <span id="current-time">--</span></p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
 </body>
 </html>
