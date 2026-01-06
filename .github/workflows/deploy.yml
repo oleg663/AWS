@@ -1,4 +1,4 @@
-name: Deploy with Rsync
+name: Deploy with Sudo
 
 on:
   push:
@@ -16,16 +16,25 @@ jobs:
         echo "${{ secrets.AWS_SSH_KEY }}" > ~/.ssh/id_rsa
         chmod 600 ~/.ssh/id_rsa
     
-    - name: Deploy with rsync
+    - name: Prepare remote directory
+      run: |
+        ssh -i ~/.ssh/id_rsa \
+          -o StrictHostKeyChecking=no \
+          ${{ secrets.AWS_USER }}@${{ secrets.AWS_HOST }} \
+          "sudo mkdir -p /var/www/my-site && \
+           sudo chown -R ${{ secrets.AWS_USER }}:www-data /var/www/my-site && \
+           sudo chmod -R 775 /var/www/my-site"
+    
+    - name: Deploy with rsync (as regular user)
       run: |
         rsync -avz \
           --exclude='.git' \
-          --exclude='.github/workflows/*.yml' \
+          --exclude='.github/workflows' \
           -e "ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no" \
           ./ \
           ${{ secrets.AWS_USER }}@${{ secrets.AWS_HOST }}:/var/www/my-site/
     
-    - name: Fix permissions
+    - name: Fix ownership for nginx
       run: |
         ssh -i ~/.ssh/id_rsa \
           -o StrictHostKeyChecking=no \
@@ -33,9 +42,3 @@ jobs:
           "sudo chown -R www-data:www-data /var/www/my-site && \
            sudo chmod -R 755 /var/www/my-site && \
            sudo systemctl reload nginx"
-    
-    - name: Success message
-      run: |
-        echo "✅ Деплой завершено!"
-        echo "📁 Файли: /var/www/my-site/"
-        echo "🔗 URL: http://${{ secrets.AWS_HOST }}"
