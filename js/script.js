@@ -35,6 +35,65 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     
+	// YouTube Video Control
+function playVideo() {
+    const iframe = document.querySelector('.video-player iframe');
+    const playBtn = document.getElementById('play-btn');
+    
+    if (iframe) {
+        // Змінюємо src, щоб активувати автопрогравання
+        const currentSrc = iframe.src;
+        if (!currentSrc.includes('autoplay=1')) {
+            iframe.src = currentSrc.replace('autoplay=0', 'autoplay=1');
+        }
+        
+        // Оновлюємо кнопку
+        playBtn.innerHTML = '<i class="fas fa-sync-alt fa-spin"></i> Завантаження...';
+        playBtn.disabled = true;
+        
+        // Через 3 секунди повертаємо нормальний стан
+        setTimeout(() => {
+            playBtn.innerHTML = '<i class="fas fa-check"></i> Відео запущено';
+            playBtn.style.background = 'var(--medical-green)';
+        }, 3000);
+    }
+}
+
+// Альтернатива: показати картинку-прев'ю, якщо відео не працює
+function showVideoAlternative() {
+    const videoContainer = document.querySelector('.video-player');
+    if (videoContainer) {
+        videoContainer.innerHTML = `
+            <div class="video-fallback">
+                <img src="https://images.pexels.com/photos/4386469/pexels-photo-4386469.jpeg" 
+                     alt="СЛР демонстрація" 
+                     class="fallback-image">
+                <div class="fallback-overlay">
+                    <a href="https://www.youtube.com/watch?v=EEYkfN5ELkE" 
+                       target="_blank" 
+                       class="fallback-link">
+                        <i class="fab fa-youtube"></i>
+                        <span>Дивитися відео на YouTube</span>
+                    </a>
+                    <p class="fallback-note">Натисніть, щоб перейти до інструкції</p>
+                </div>
+            </div>
+        `;
+    }
+}
+
+// Перевірка чи відео завантажилось
+document.addEventListener('DOMContentLoaded', function() {
+    const videoIframe = document.querySelector('.video-player iframe');
+    
+    // Якщо відео не завантажиться за 5 секунд - показуємо альтернативу
+    setTimeout(() => {
+        if (videoIframe && !videoIframe.contentWindow) {
+            showVideoAlternative();
+        }
+    }, 5000);
+});
+	
     // Активна навігація при скролі
     const sections = document.querySelectorAll('section');
     const navLinks = document.querySelectorAll('.nav-link');

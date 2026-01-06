@@ -77,6 +77,66 @@
             </div>
         </div>
     </section>
+	
+	        <!-- Відео головне -->
+    <section id="main-video" class="section main-video-section">
+        <div class="container">
+            <div class="video-header">
+                <h2 class="section-title">
+                    <i class="fas fa-play-circle"></i> Дивіться наочну інструкцію
+                </h2>
+                <p class="video-subtitle">Правильна перша допомога може врятувати життя. Перегляньте це відео від МОЗ України.</p>
+            </div>
+            
+            <div class="featured-video">
+                <div class="video-player">
+    <iframe 
+        src="https://www.youtube.com/embed/UUTh_QjgfcA?rel=0&modestbranding=1&autoplay=0&controls=1&showinfo=1" 
+        title="Повна інструкція з першої медичної допомоги" 
+        frameborder="0" 
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+        allowfullscreen
+        referrerpolicy="strict-origin-when-cross-origin">
+    </iframe>
+</div>
+                
+                <div class="video-info">
+                    <h3>Серцево-легенева реанімація (СЛР): покрокова інструкція</h3>
+                    <div class="video-meta">
+                        <span class="meta-item">
+                            <i class="fas fa-clock"></i> Тривалість: 5:14
+                        </span>
+                        <span class="meta-item">
+                            <i class="fas fa-hospital"></i> Джерело: МОЗ України
+                        </span>
+                        <span class="meta-item">
+                            <i class="fas fa-certificate"></i> Офіційна інструкція
+                        </span>
+                    </div>
+                    <div class="video-description">
+                        <h4><i class="fas fa-list-check"></i> У відео покроково показується:</h4>
+                        <ul>
+                            <li>Перевірка свідомості та дихання постраждалого</li>
+                            <li>Правильна техніка натискань на грудину (30 натискань)</li>
+                            <li>Техніка штучного дихання (2 вдихи)</li>
+                            <li>Положення рук та тіла під час СЛР</li>
+                            <li>Темп натискань (100-120 на хвилину)</li>
+                            <li>Дії до прибуття швидкої допомоги</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="video-actions">
+                <button onclick="playVideo()" class="video-action-btn" id="play-btn">
+                    <i class="fas fa-play"></i> Дивитися відео
+                </button>
+                <a href="#principles" class="video-action-btn secondary">
+                    <i class="fas fa-book-medical"></i> Читати інструкцію
+                </a>
+            </div>
+        </div>
+    </section>
 
     <!-- Основні принципи -->
     <section id="principles" class="section principles">
@@ -87,7 +147,7 @@
                     <div class="principle-icon">
                         <i class="fas fa-shield-alt"></i>
                     </div>
-					<img src="https://images.pexels.com/photos/955875/pexels-photo-955875.jpeg" alt="Медик в захисних рукавичках демонструє безпечне надання допомоги" class="principle-image">
+					<img src="https://cdn-icons-png.flaticon.com/512/7839/7839253.png" alt="Медик в захисних рукавичках демонструє безпечне надання допомоги" class="principle-image">
                     <h3>Безпека</h3>
                     <p>Переконайтесь, що вам нічого не загрожує. Не ставте себе в небезпеку.</p>
                 </div>
@@ -133,10 +193,7 @@
             <div class="tab-content active" id="bleeding">
     <h3>Кровотечі: що робити?</h3>
     <!-- Додайте цю картинку під заголовком -->
-    <div class="instruction-image">
-        <img src="https://images.pexels.com/photos/7089016/pexels-photo-7089016.jpeg" alt="Надання допомоги при сильній кровотечі на нозі, використання джгута" class="injury-image">
-        <p class="image-caption">Накладення джгута вище рани для зупинки сильної артеріальної кровотечі.</p>
-    </div>
+    
     <div class="instructions">
         <div class="instruction-step">
             <span class="step-number">1</span>
@@ -289,6 +346,10 @@
         </div>
     </div>
 </section>
+    
+    <!-- Контакти -->
+    <section id="contacts" class="section contacts">
+        <!-- ... існуючий код контактів ... -->
 
     <!-- Контакти -->
     <section id="contacts" class="section contacts">
