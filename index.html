@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мій Сайт - Головна</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">
+                    <i class="fas fa-rocket"></i>
+                    <span>МійСайт</span>
+                </div>
+                <ul>
+                    <li><a href="index.html" class="active">Головна</a></li>
+                    <li><a href="about.html">Про нас</a></li>
+                    <li><a href="#"><i class="fab fa-github"></i> GitHub</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="hero">
+            <h1>Вітаю на моєму сайті! 🚀</h1>
+            <p>Це демонстрація CI/CD пайплайну з GitHub на AWS</p>
+            <div class="status-card">
+                <h3><i class="fas fa-check-circle"></i> Статус CI/CD:</h3>
+                <p id="build-status">Останній деплой: <span class="loading">Завантаження...</span></p>
+                <button id="refresh-btn" class="btn">
+                    <i class="fas fa-sync-alt"></i> Оновити статус
+                </button>
+            </div>
+        </section>
+
+        <section class="features">
+            <h2>Що ми практикуємо:</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <i class="fab fa-github"></i>
+                    <h3>GitHub Actions</h3>
+                    <p>Автоматизація деплою при кожному пуші</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-server"></i>
+                    <h3>AWS EC2</h3>
+                    <p>Деплой на Ubuntu сервер</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-code"></i>
+                    <h3>HTML/CSS/JS</h3>
+                    <p>Сучасний статичний сайт</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>© 2023 Мій CI/CD Проект | Останнє оновлення: <span id="last-update">--</span></p>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

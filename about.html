@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мій Сайт - Про нас</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">
+                    <i class="fas fa-rocket"></i>
+                    <span>МійСайт</span>
+                </div>
+                <ul>
+                    <li><a href="index.html">Головна</a></li>
+                    <li><a href="about.html" class="active">Про нас</a></li>
+                    <li><a href="#"><i class="fab fa-github"></i> GitHub</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="about">
+            <h1>Про цей проект</h1>
+            <p>Цей проект створений для практики CI/CD пайплайнів.</p>
+            
+            <h2>Технології:</h2>
+            <ul class="tech-list">
+                <li><i class="fab fa-html5"></i> HTML5</li>
+                <li><i class="fab fa-css3-alt"></i> CSS3</li>
+                <li><i class="fab fa-js"></i> JavaScript</li>
+                <li><i class="fab fa-github"></i> GitHub Actions</li>
+                <li><i class="fab fa-aws"></i> AWS EC2</li>
+                <li><i class="fab fa-ubuntu"></i> Ubuntu Server</li>
+            </ul>
+
+            <h2>Що робить CI/CD пайплайн:</h2>
+            <ol class="pipeline-steps">
+                <li>При пуше в репозиторій запускається GitHub Actions</li>
+                <li>Перевіряється синтаксис HTML/CSS</li>
+                <li>Файли передаються на AWS сервер через SSH</li>
+                <li>Nginx віддає статичні файли</li>
+                <li>Статус деплою відображається на сайті</li>
+            </ol>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>© 2023 Мій CI/CD Проект | Практика DevOps</p>
+        </div>
+    </footer>
+</body>
+</html>

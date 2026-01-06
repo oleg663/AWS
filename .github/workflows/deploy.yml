@@ -1,0 +1,64 @@
+name: Deploy to AWS
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: HTML Validation
+      uses: Cyb3r-Jak3/html5-validator-action@v1.2.0
+      with:
+        root: ./
+    
+    - name: Check for broken links
+      run: |
+        apt-get update && apt-get install -y linkchecker
+        linkchecker --check-extern index.html || true
+
+  deploy:
+    needs: test
+    if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Deploy to AWS EC2
+      uses: appleboy/scp-action@master
+      with:
+        host: ${{ secrets.AWS_HOST }}
+        username: ${{ secrets.AWS_USER }}
+        key: ${{ secrets.AWS_SSH_KEY }}
+        source: "./"
+        target: "/var/www/my-site"
+        strip_components: 1
+    
+    - name: Set correct permissions
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.AWS_HOST }}
+        username: ${{ secrets.AWS_USER }}
+        key: ${{ secrets.AWS_SSH_KEY }}
+        script: |
+          sudo chown -R www-data:www-data /var/www/my-site
+          sudo chmod -R 755 /var/www/my-site
+          sudo systemctl reload nginx
+    
+    - name: Send success notification
+      if: success()
+      run: |
+        echo "🚀 Деплой успішний!"
+        echo "Сайт доступний за адресою: http://${{ secrets.AWS_HOST }}"
+    
+    - name: Send failure notification
+      if: failure()
+      run: |
+        echo "❌ Деплой не вдався!"
+        echo "Перевір логи вище"
