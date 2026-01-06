@@ -1,4 +1,4 @@
-name: Deploy with Cleanup
+name: Deploy with Rsync
 
 on:
   push:
@@ -15,29 +15,27 @@ jobs:
         mkdir -p ~/.ssh
         echo "${{ secrets.AWS_SSH_KEY }}" > ~/.ssh/id_rsa
         chmod 600 ~/.ssh/id_rsa
-        echo "StrictHostKeyChecking no" > ~/.ssh/config
     
-    - name: Clean remote directory
+    - name: Deploy with rsync
       run: |
-        ssh ${{ secrets.AWS_USER }}@${{ secrets.AWS_HOST }} \
-          "sudo rm -rf /var/www/my-site/* 2>/dev/null || true"
-    
-    - name: Copy files
-      run: |
-        scp -r \
-          --exclude '.git' \
-          --exclude '.github/workflows' \
-          ./* \
+        rsync -avz \
+          --exclude='.git' \
+          --exclude='.github/workflows/*.yml' \
+          -e "ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no" \
+          ./ \
           ${{ secrets.AWS_USER }}@${{ secrets.AWS_HOST }}:/var/www/my-site/
     
-    - name: Set permissions
+    - name: Fix permissions
       run: |
-        ssh ${{ secrets.AWS_USER }}@${{ secrets.AWS_HOST }} \
+        ssh -i ~/.ssh/id_rsa \
+          -o StrictHostKeyChecking=no \
+          ${{ secrets.AWS_USER }}@${{ secrets.AWS_HOST }} \
           "sudo chown -R www-data:www-data /var/www/my-site && \
            sudo chmod -R 755 /var/www/my-site && \
            sudo systemctl reload nginx"
     
-    - name: Verify
+    - name: Success message
       run: |
         echo "✅ Деплой завершено!"
-        echo "Сайт: http://${{ secrets.AWS_HOST }}"
+        echo "📁 Файли: /var/www/my-site/"
+        echo "🔗 URL: http://${{ secrets.AWS_HOST }}"
