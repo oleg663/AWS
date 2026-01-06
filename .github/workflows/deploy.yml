@@ -1,4 +1,4 @@
-name: Deploy with Sudo
+name: Deploy CI/CD Site
 
 on:
   push:
@@ -13,32 +13,46 @@ jobs:
     - name: Setup SSH
       run: |
         mkdir -p ~/.ssh
-        echo "${{ secrets.AWS_SSH_KEY }}" > ~/.ssh/id_rsa
-        chmod 600 ~/.ssh/id_rsa
+        echo "${{ secrets.AWS_SSH_KEY }}" > ~/.ssh/deploy_key
+        chmod 600 ~/.ssh/deploy_key
     
-    - name: Prepare remote directory
+    - name: Deploy files (simple scp)
       run: |
-        ssh -i ~/.ssh/id_rsa \
+        # Копіюємо тільки потрібні файли
+        scp -i ~/.ssh/deploy_key \
           -o StrictHostKeyChecking=no \
-          ${{ secrets.AWS_USER }}@${{ secrets.AWS_HOST }} \
-          "sudo mkdir -p /var/www/my-site && \
-           sudo chown -R ${{ secrets.AWS_USER }}:www-data /var/www/my-site && \
-           sudo chmod -R 775 /var/www/my-site"
-    
-    - name: Deploy with rsync (as regular user)
-      run: |
-        rsync -avz \
-          --exclude='.git' \
-          --exclude='.github/workflows' \
-          -e "ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no" \
-          ./ \
+          index.html \
+          ${{ secrets.AWS_USER }}@${{ secrets.AWS_HOST }}:/var/www/my-site/
+        
+        scp -i ~/.ssh/deploy_key \
+          -o StrictHostKeyChecking=no \
+          about.html \
+          ${{ secrets.AWS_USER }}@${{ secrets.AWS_HOST }}:/var/www/my-site/
+        
+        # CSS директорія
+        scp -i ~/.ssh/deploy_key \
+          -o StrictHostKeyChecking=no \
+          -r css/ \
+          ${{ secrets.AWS_USER }}@${{ secrets.AWS_HOST }}:/var/www/my-site/
+        
+        # JS директорія  
+        scp -i ~/.ssh/deploy_key \
+          -o StrictHostKeyChecking=no \
+          -r js/ \
           ${{ secrets.AWS_USER }}@${{ secrets.AWS_HOST }}:/var/www/my-site/
     
-    - name: Fix ownership for nginx
+    - name: Set final permissions
       run: |
-        ssh -i ~/.ssh/id_rsa \
+        ssh -i ~/.ssh/deploy_key \
           -o StrictHostKeyChecking=no \
           ${{ secrets.AWS_USER }}@${{ secrets.AWS_HOST }} \
           "sudo chown -R www-data:www-data /var/www/my-site && \
-           sudo chmod -R 755 /var/www/my-site && \
+           sudo find /var/www/my-site -type f -exec chmod 644 {} \; && \
+           sudo find /var/www/my-site -type d -exec chmod 755 {} \; && \
            sudo systemctl reload nginx"
+    
+    - name: Verify
+      run: |
+        echo "✅ Деплой завершено!"
+        echo "🌐 Сайт: http://${{ secrets.AWS_HOST }}"
+        echo "📁 Файли: /var/www/my-site/"
