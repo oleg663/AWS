@@ -1,238 +1,368 @@
-
 <!DOCTYPE html>
 <html lang="uk">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CI/CD Pipeline Demo | AWS + GitHub</title>
+    <title>Перша медична допомога | Навчальний сайт</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" href="assets/medical-icon.png" type="image/png">
+    
+    <!-- Стилі -->
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-	<link rel="icon" href="assets/colorful-bird-illustration-gradient_343694-1741.png" type="image/png">
-    <link rel="apple-touch-icon" href="assets/colorful-bird-illustration-gradient_343694-1741.png">
+    
+    <!-- Мета-теги -->
+    <meta name="description" content="Навчальний сайт про надання першої медичної допомоги при травмах та невідкладних станах">
+    <meta name="keywords" content="перша допомога, медицина, травми, екстрена допомога, безпека">
 </head>
 <body>
-    <!-- Navigation -->
+    <!-- Навігація -->
     <nav class="navbar">
         <div class="container">
             <a href="#" class="logo">
-                <i class="fas fa-rocket"></i>
-                <span>DevOps<span class="logo-highlight">Demo</span></span>
+                <i class="fas fa-first-aid"></i>
+                <span>Перша<span class="logo-highlight">Допомога</span></span>
             </a>
             <div class="nav-links">
-                <a href="#features" class="nav-link">Фічі</a>
-                <a href="#pipeline" class="nav-link">Пайплайн</a>
-                <a href="#tech" class="nav-link">Технології</a>
-                <a href="https://github.com/oleg663/AWS" target="_blank" class="nav-link github-link">
-                    <i class="fab fa-github"></i> GitHub
-                </a>
+                <a href="#home" class="nav-link active">Головна</a>
+                <a href="#principles" class="nav-link">Принципи</a>
+                <a href="#injuries" class="nav-link">Травми</a>
+                <a href="#algorithms" class="nav-link">Алгоритми</a>
+                <a href="#first-aid-kit" class="nav-link">Аптечка</a>
+                <a href="#contacts" class="nav-link">Контакти</a>
             </div>
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <section class="hero">
+    <!-- Герой секція -->
+    <section id="home" class="hero medical-hero">
         <div class="container">
             <div class="hero-content">
                 <h1 class="hero-title">
-                    <span class="title-gradient">CI/CD Pipeline</span><br>
-                    від GitHub до AWS
+                    <span class="title-gradient">Перша медична допомога</span><br>
+                    може врятувати життя
                 </h1>
                 <p class="hero-subtitle">
-                    Автоматичний деплой статичного сайту при кожному коміті.
-                    Практика DevOps у дії!
+                    Навчіться надавати першу допомогу правильно. 
+                    Ці знання можуть допомогти вашим близьким, колегам чи навіть незнайомцям.
                 </p>
                 <div class="hero-stats">
                     <div class="stat">
-                        <i class="fas fa-bolt"></i>
+                        <i class="fas fa-clock"></i>
                         <div>
-                            <h3 id="deploy-time">--</h3>
-                            <p>Останній деплой</p>
+                            <h3>Перші 4 хвилини</h3>
+                            <p>Найважливіші для порятунку</p>
                         </div>
                     </div>
                     <div class="stat">
-                        <i class="fas fa-check-circle"></i>
+                        <i class="fas fa-user-md"></i>
                         <div>
-                            <h3 id="status">Успішно</h3>
-                            <p>Статус</p>
+                            <h3>80% випадків</h3>
+                            <p>Допомога надається не медиками</p>
                         </div>
                     </div>
                     <div class="stat">
-                        <i class="fas fa-server"></i>
+                        <i class="fas fa-heartbeat"></i>
                         <div>
-                            <h3>AWS EC2</h3>
-                            <p>Інфраструктура</p>
+                            <h3>Збережені життя</h3>
+                            <p>Правильні дії = більше шансів</p>
                         </div>
                     </div>
                 </div>
-                <button id="refresh-btn" class="cta-button">
-                    <i class="fas fa-sync-alt"></i> Оновити статус
-                </button>
-            </div>
-            <div class="hero-visual">
-                <div class="pipeline-animation">
-                    <div class="pipeline-step">
-                        <div class="step-icon"><i class="fab fa-github"></i></div>
-                        <p class="step-label">Git Push</p>
-                    </div>
-                    <div class="pipeline-arrow">→</div>
-                    <div class="pipeline-step">
-                        <div class="step-icon"><i class="fas fa-play-circle"></i></div>
-                        <p class="step-label">GitHub Actions</p>
-                    </div>
-                    <div class="pipeline-arrow">→</div>
-                    <div class="pipeline-step">
-                        <div class="step-icon"><i class="fas fa-cloud-upload-alt"></i></div>
-                        <p class="step-label">SCP до AWS</p>
-                    </div>
-                    <div class="pipeline-arrow">→</div>
-                    <div class="pipeline-step">
-                        <div class="step-icon"><i class="fas fa-check-double"></i></div>
-                        <p class="step-label">Сайт живий!</p>
-                    </div>
-                </div>
+                <a href="#principles" class="cta-button">
+                    <i class="fas fa-book-medical"></i> Почати навчання
+                </a>
             </div>
         </div>
     </section>
 
-    <!-- Features Section -->
-    <section id="features" class="features">
+    <!-- Основні принципи -->
+    <section id="principles" class="section principles">
         <div class="container">
-            <h2 class="section-title">Що демонструє цей проект</h2>
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-code-branch"></i>
-                    </div>
-                    <h3>Git Workflow</h3>
-                    <p>Автоматизація при кожному push в main гілку. Практика Git потоку.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-cogs"></i>
-                    </div>
-                    <h3>GitHub Actions</h3>
-                    <p>Налаштування CI/CD пайплайнів без додаткових інструментів.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
+            <h2 class="section-title">Основні принципи першої допомоги</h2>
+            <div class="principles-grid">
+                <div class="principle-card">
+                    <div class="principle-icon">
                         <i class="fas fa-shield-alt"></i>
                     </div>
                     <h3>Безпека</h3>
-                    <p>Використання Secrets для SSH ключів та конфіденційних даних.</p>
+                    <p>Переконайтесь, що вам нічого не загрожує. Не ставте себе в небезпеку.</p>
                 </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-server"></i>
+                <div class="principle-card">
+                    <div class="principle-icon">
+                        <i class="fas fa-phone-alt"></i>
                     </div>
-                    <h3>AWS Infra</h3>
-                    <p>Робота з EC2, Security Groups, SSH, та веб-серверами.</p>
+                    <h3>Виклик допомоги</h3>
+                    <p>Негайно викличте швидку (103). Назвіть адресу, стан постраждалого.</p>
+                </div>
+                <div class="principle-card">
+                    <div class="principle-icon">
+                        <i class="fas fa-user-injured"></i>
+                    </div>
+                    <h3>Оцінка стану</h3>
+                    <p>Перевірте свідомість, дихання, пульс. Визначте пріоритетні травми.</p>
+                </div>
+                <div class="principle-card">
+                    <div class="principle-icon">
+                        <i class="fas fa-hands-helping"></i>
+                    </div>
+                    <h3>Надання допомоги</h3>
+                    <p>Надайте допомогу відповідно до стану. Зупиніть кровотечу, накладіть пов'язки.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Pipeline Section -->
-    <section id="pipeline" class="pipeline">
+    <!-- Типи травм -->
+    <section id="injuries" class="section injuries">
         <div class="container">
-            <h2 class="section-title">Як працює пайплайн</h2>
-            <div class="timeline">
-                <div class="timeline-item">
-                    <div class="timeline-marker">1</div>
-                    <div class="timeline-content">
-                        <h3>Локальна розробка</h3>
-                        <p>Розробка на локальному комп'ютері з використанням Git для контролю версій.</p>
+            <h2 class="section-title">Найпоширеніші травми</h2>
+            <div class="injuries-tabs">
+                <button class="tab-btn active" data-tab="bleeding">Кровотечі</button>
+                <button class="tab-btn" data-tab="fractures">Переломи</button>
+                <button class="tab-btn" data-tab="burns">Опіки</button>
+                <button class="tab-btn" data-tab="choking">Задишка</button>
+            </div>
+            
+            <div class="tab-content active" id="bleeding">
+                <h3>Кровотечі: що робити?</h3>
+                <div class="instructions">
+                    <div class="instruction-step">
+                        <span class="step-number">1</span>
+                        <p>Натисніть чистою тканиною безпосередньо на рану</p>
+                    </div>
+                    <div class="instruction-step">
+                        <span class="step-number">2</span>
+                        <p>Підніміть уражену кінцівку вище рівня серця</p>
+                    </div>
+                    <div class="instruction-step">
+                        <span class="step-number">3</span>
+                        <p>Якщо кровотеча сильна - накладіть джгут ВИЩЕ рани</p>
+                    </div>
+                    <div class="instruction-step">
+                        <span class="step-number">4</span>
+                        <p>Запишіть час накладання джгута</p>
                     </div>
                 </div>
-                <div class="timeline-item">
-                    <div class="timeline-marker">2</div>
-                    <div class="timeline-content">
-                        <h3>Push на GitHub</h3>
-                        <p>Код пушиться на GitHub, що запускає GitHub Actions workflow.</p>
+            </div>
+            
+            <div class="tab-content" id="fractures">
+                <h3>Переломи: перша допомога</h3>
+                <div class="instructions">
+                    <div class="instruction-step">
+                        <span class="step-number">1</span>
+                        <p>Не рухайте постраждалого без необхідності</p>
+                    </div>
+                    <div class="instruction-step">
+                        <span class="step-number">2</span>
+                        <p>Зафіксуйте кінцівку в положенні, в якому вона знаходиться</p>
+                    </div>
+                    <div class="instruction-step">
+                        <span class="step-number">3</span>
+                        <p>Використовуйте шини або підручні засоби</p>
+                    </div>
+                    <div class="instruction-step">
+                        <span class="step-number">4</span>
+                        <p>Прикрийте рану стерильною пов'язкою</p>
                     </div>
                 </div>
-                <div class="timeline-item">
-                    <div class="timeline-marker">3</div>
-                    <div class="timeline-content">
-                        <h3>Автоматичний деплой</h3>
-                        <p>GitHub Actions підключається до AWS через SSH та деплоїть файли.</p>
+            </div>
+            
+            <div class="tab-content" id="burns">
+                <h3>Опіки: алгоритм дій</h3>
+                <div class="instructions">
+                    <div class="instruction-step">
+                        <span class="step-number">1</span>
+                        <p>Охолодіть опік проточною водою 10-15 хвилин</p>
+                    </div>
+                    <div class="instruction-step">
+                        <span class="step-number">2</span>
+                        <p>Не відривайте одяг, що прилип до шкіри</p>
+                    </div>
+                    <div class="instruction-step">
+                        <span class="step-number">3</span>
+                        <p>Накрийте стерильною пов'язкою</p>
+                    </div>
+                    <div class="instruction-step">
+                        <span class="step-number">4</span>
+                        <p>Не використовуйте льод, масло чи мазі</p>
                     </div>
                 </div>
-                <div class="timeline-item">
-                    <div class="timeline-marker">4</div>
-                    <div class="timeline-content">
-                        <h3>Сайт оновлено</h3>
-                        <p>Nginx автоматично віддає нові файли. Сайт оновлено без downtime.</p>
+            </div>
+            
+            <div class="tab-content" id="choking">
+                <h3>Задишка: прийом Геймліха</h3>
+                <div class="instructions">
+                    <div class="instruction-step">
+                        <span class="step-number">1</span>
+                        <p>Запитайте "Ви задихаєтесь?"</p>
+                    </div>
+                    <div class="instruction-step">
+                        <span class="step-number">2</span>
+                        <p>Станьте позаду постраждалого</p>
+                    </div>
+                    <div class="instruction-step">
+                        <span class="step-number">3</span>
+                        <p>Обхопіть руками на рівні живота</p>
+                    </div>
+                    <div class="instruction-step">
+                        <span class="step-number">4</span>
+                        <p>Робіть різкі поштовхи догори до виходу предмета</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Tech Stack -->
-    <section id="tech" class="tech">
+    <!-- Алгоритми -->
+    <section id="algorithms" class="section algorithms">
         <div class="container">
-            <h2 class="section-title">Технологічний стек</h2>
-            <div class="tech-grid">
-                <div class="tech-item">
-                    <i class="fab fa-aws fa-3x"></i>
-                    <h3>AWS EC2</h3>
-                    <p>Віртуальний сервер на Amazon Web Services</p>
+            <h2 class="section-title">Алгоритми дій при невідкладних станах</h2>
+            <div class="algorithm-cards">
+                <div class="algorithm-card">
+                    <h3><i class="fas fa-heart"></i> Серцевий напад</h3>
+                    <ol>
+                        <li>Викличте швидку (103)</li>
+                        <li>Посадіть постраждалого</li>
+                        <li>Дайте аспірин (якщо немає алергії)</li>
+                        <li>Не давайте їсти чи пити</li>
+                        <li>Готуйтесь до СЛР</li>
+                    </ol>
                 </div>
-                <div class="tech-item">
-                    <i class="fab fa-ubuntu fa-3x"></i>
-                    <h3>Ubuntu 22.04</h3>
-                    <p>Операційна система сервера</p>
+                <div class="algorithm-card">
+                    <h3><i class="fas fa-lungs"></i> Зупинка дихання</h3>
+                    <ol>
+                        <li>Перевірте реакцію та дихання</li>
+                        <li>Викличте швидку</li>
+                        <li>Почати СЛР: 30 натискань</li>
+                        <li>2 вдихи</li>
+                        <li>Продовжуйте до прибуття медиків</li>
+                    </ol>
                 </div>
-                <div class="tech-item">
-                    <i class="fab fa-github fa-3x"></i>
-                    <h3>GitHub Actions</h3>
-                    <p>CI/CD пайплайн автоматизація</p>
-                </div>
-                <div class="tech-item">
-                    <i class="fas fa-code fa-3x"></i>
-                    <h3>HTML/CSS/JS</h3>
-                    <p>Сучасний статичний веб-сайт</p>
-                </div>
-                <div class="tech-item">
-                    <i class="fas fa-network-wired fa-3x"></i>
-                    <h3>Nginx</h3>
-                    <p>Високопродуктивний веб-сервер</p>
-                </div>
-                <div class="tech-item">
-                    <i class="fas fa-terminal fa-3x"></i>
-                    <h3>SSH/SCP</h3>
-                    <p>Безпечне підключення та передача файлів</p>
+                <div class="algorithm-card">
+                    <h3><i class="fas fa-temperature-high"></i> Тепловий удар</h3>
+                    <ol>
+                        <li>Перенесіть в прохолодне місце</li>
+                        <li>Зніміть зайвий одяг</li>
+                        <li>Охолоджуйте тіло водою</li>
+                        <li>Дайте пити прохолодну воду</li>
+                        <li>Моніторюйте стан</li>
+                    </ol>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Footer -->
+    <!-- Аптечка -->
+    <section id="first-aid-kit" class="section first-aid-kit">
+        <div class="container">
+            <h2 class="section-title">Що має бути в аптечці</h2>
+            <div class="kit-items">
+                <div class="kit-item">
+                    <i class="fas fa-band-aid"></i>
+                    <h3>Перев'язувальні матеріали</h3>
+                    <ul>
+                        <li>Бинти стерильні (різних розмірів)</li>
+                        <li>Пластир бактерицидний</li>
+                        <li>Еластичний бинт</li>
+                        <li>Марлеві серветки</li>
+                    </ul>
+                </div>
+                <div class="kit-item">
+                    <i class="fas fa-prescription-bottle"></i>
+                    <h3>Медикаменти</h3>
+                    <ul>
+                        <li>Антисептик (перекис, йод)</li>
+                        <li>Активоване вугілля</li>
+                        <li>Знеболювальні</li>
+                        <li>Антигістамінні</li>
+                    </ul>
+                </div>
+                <div class="kit-item">
+                    <i class="fas fa-tools"></i>
+                    <h3>Інструменти</h3>
+                    <ul>
+                        <li>Ножиці</li>
+                        <li>Пінцет</li>
+                        <li>Термометр</li>
+                        <li>Одноразові рукавички</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Контакти -->
+    <section id="contacts" class="section contacts">
+        <div class="container">
+            <h2 class="section-title">Екстрені контакти</h2>
+            <div class="emergency-contacts">
+                <div class="contact-card">
+                    <div class="contact-icon emergency">
+                        <i class="fas fa-ambulance"></i>
+                    </div>
+                    <h3>Швидка допомога</h3>
+                    <p class="phone-number">103</p>
+                    <p>Круглосуточно, безкоштовно</p>
+                </div>
+                <div class="contact-card">
+                    <div class="contact-icon emergency">
+                        <i class="fas fa-fire"></i>
+                    </div>
+                    <h3>Пожежна служба</h3>
+                    <p class="phone-number">101</p>
+                    <p>Також при ДТП, аваріях</p>
+                </div>
+                <div class="contact-card">
+                    <div class="contact-icon emergency">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Поліція</h3>
+                    <p class="phone-number">102</p>
+                    <p>При злочинах, небезпечних ситуаціях</p>
+                </div>
+                <div class="contact-card">
+                    <div class="contact-icon emergency">
+                        <i class="fas fa-phone-volume"></i>
+                    </div>
+                    <h3>Єдиний номер</h3>
+                    <p class="phone-number">112</p>
+                    <p>Для всіх екстрених служб</p>
+                </div>
+            </div>
+            
+            <div class="disclaimer">
+                <h3><i class="fas fa-exclamation-triangle"></i> Важливо!</h3>
+                <p>Цей сайт надає лише інформацію про першу допомогу. У випадку небезпеки для життя негайно звертайтесь до професійних медиків за телефонами екстрених служб.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Футер -->
     <footer class="footer">
         <div class="container">
             <div class="footer-content">
                 <div class="footer-section">
-                    <h3>CI/CD Demo Project</h3>
-                    <p>Практичний проект для демонстрації автоматизації деплою.</p>
+                    <h3>Перша медична допомога</h3>
+                    <p>Навчальний сайт з інформацією про надання першої допомоги при травмах та невідкладних станах.</p>
                 </div>
                 <div class="footer-section">
-                    <h3>Статус системи</h3>
-                    <p>Сервер: <span id="server-status" class="status-online">● Онлайн</span></p>
-                    <p>Останнє оновлення: <span id="last-update">--</span></p>
+                    <h3>Швидкі посилання</h3>
+                    <a href="#principles" class="footer-link">Принципи допомоги</a>
+                    <a href="#injuries" class="footer-link">Види травм</a>
+                    <a href="#algorithms" class="footer-link">Алгоритми дій</a>
+                    <a href="#first-aid-kit" class="footer-link">Склад аптечки</a>
                 </div>
                 <div class="footer-section">
-                    <h3>Корисні посилання</h3>
-                    <a href="https://github.com/oleg663/AWS" target="_blank" class="footer-link">
-                        <i class="fab fa-github"></i> Репозиторій
-                    </a>
-                    <a href="https://docs.github.com/en/actions" target="_blank" class="footer-link">
-                        <i class="fas fa-book"></i> GitHub Actions Docs
-                    </a>
+                    <h3>Пам'ятайте</h3>
+                    <p>Ваші знання можуть врятувати життя. Регулярно оновлюйте навички та перевіряйте аптечку.</p>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>© 2024 CI/CD Pipeline Demo | Практика DevOps | Оновлено: <span id="current-time">--</span></p>
+                <p>© 2024 Навчальний сайт "Перша медична допомога" | Інформація надається з навчальною метою</p>
+                <p class="ci-cd-badge"><i class="fas fa-sync-alt"></i> Автоматично оновлюється через CI/CD</p>
             </div>
         </div>
     </footer>

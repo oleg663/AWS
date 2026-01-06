@@ -1,467 +1,247 @@
-/* Reset & Base Styles */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
+/* Медичні стилі */
 :root {
-    --primary: #6366f1;
-    --primary-dark: #4f46e5;
-    --secondary: #10b981;
-    --dark: #1f2937;
-    --light: #f9fafb;
-    --gray: #6b7280;
-    --gray-light: #e5e7eb;
-    --gradient: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+    --medical-red: #e63946;
+    --medical-blue: #457b9d;
+    --medical-green: #2a9d8f;
+    --medical-yellow: #e9c46a;
+    --medical-dark: #1d3557;
+    --medical-light: #f1faee;
 }
 
-body {
-    font-family: 'Inter', sans-serif;
-    line-height: 1.6;
-    color: var(--dark);
-    background: var(--light);
+/* Герой секція для медичного сайту */
+.medical-hero {
+    background: linear-gradient(135deg, var(--medical-dark) 0%, var(--medical-blue) 100%);
 }
 
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 1.5rem;
-}
-
-/* Navigation */
-.navbar {
-    background: white;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-    padding: 1rem 0;
-}
-
-.navbar .container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.logo {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 1.5rem;
-    font-weight: 700;
-    text-decoration: none;
-    color: var(--dark);
-}
-
-.logo i {
-    color: var(--primary);
-    font-size: 1.8rem;
-}
-
-.logo-highlight {
-    color: var(--primary);
-}
-
-.nav-links {
-    display: flex;
-    gap: 2rem;
-    align-items: center;
-}
-
-.nav-link {
-    text-decoration: none;
-    color: var(--gray);
-    font-weight: 500;
-    padding: 0.5rem 1rem;
-    border-radius: 0.5rem;
-    transition: all 0.3s ease;
-}
-
-.nav-link:hover {
-    color: var(--primary);
-    background: var(--gray-light);
-}
-
-.github-link {
-    background: var(--dark);
-    color: white !important;
-    padding: 0.5rem 1.5rem !important;
-}
-
-.github-link:hover {
-    background: #374151 !important;
-}
-
-/* Hero Section */
-.hero {
-    padding: 5rem 0;
-    background: var(--gradient);
-    color: white;
-    position: relative;
-    overflow: hidden;
-}
-
-.hero .container {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 3rem;
-    align-items: center;
-}
-
-.hero-title {
-    font-size: 3rem;
-    font-weight: 700;
-    line-height: 1.2;
-    margin-bottom: 1.5rem;
-}
-
-.title-gradient {
-    background: linear-gradient(90deg, #fbbf24, #f87171);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    display: inline-block;
-}
-
-.hero-subtitle {
-    font-size: 1.2rem;
-    opacity: 0.9;
-    margin-bottom: 2rem;
-    max-width: 600px;
-}
-
-.hero-stats {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1.5rem;
-    margin-bottom: 2rem;
-}
-
-.stat {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    background: rgba(255, 255, 255, 0.1);
-    padding: 1rem;
-    border-radius: 1rem;
-    backdrop-filter: blur(10px);
-}
-
-.stat i {
-    font-size: 1.5rem;
-    color: #fbbf24;
-}
-
-.stat h3 {
-    font-size: 1.5rem;
-    margin-bottom: 0.25rem;
-}
-
-.stat p {
-    font-size: 0.9rem;
-    opacity: 0.8;
-}
-
-.cta-button {
-    background: white;
-    color: var(--primary);
-    border: none;
-    padding: 1rem 2rem;
-    font-size: 1.1rem;
-    font-weight: 600;
-    border-radius: 0.5rem;
-    cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    transition: all 0.3s ease;
-}
-
-.cta-button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-}
-
-/* Pipeline Animation */
-.pipeline-animation {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 1rem;
-    background: rgba(255, 255, 255, 0.1);
-    padding: 2rem;
-    border-radius: 1rem;
-    backdrop-filter: blur(10px);
-}
-
-.pipeline-step {
-    text-align: center;
-    animation: float 3s ease-in-out infinite;
-}
-
-.step-icon {
-    width: 60px;
-    height: 60px;
-    background: white;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto 0.5rem;
-    font-size: 1.5rem;
-    color: var(--primary);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-}
-
-.pipeline-arrow {
-    color: white;
-    font-size: 1.5rem;
-    animation: pulse 2s infinite;
-}
-
-/* Features */
-.features {
-    padding: 5rem 0;
-    background: white;
-}
-
-.section-title {
-    text-align: center;
-    font-size: 2.5rem;
-    margin-bottom: 3rem;
-    color: var(--dark);
-}
-
-.features-grid {
+/* Принципи */
+.principles-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 2rem;
+    margin-top: 2rem;
 }
 
-.feature-card {
-    background: var(--light);
+.principle-card {
+    background: white;
     padding: 2rem;
     border-radius: 1rem;
     text-align: center;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    border: 1px solid var(--gray-light);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    border-top: 4px solid var(--medical-red);
 }
 
-.feature-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+.principle-icon {
+    font-size: 2.5rem;
+    color: var(--medical-red);
+    margin-bottom: 1rem;
 }
 
-.feature-icon {
-    width: 70px;
-    height: 70px;
-    background: var(--gradient);
-    border-radius: 50%;
+/* Травми - таби */
+.injuries-tabs {
     display: flex;
-    align-items: center;
     justify-content: center;
-    margin: 0 auto 1.5rem;
-    font-size: 1.8rem;
+    gap: 1rem;
+    margin: 2rem 0;
+    flex-wrap: wrap;
+}
+
+.tab-btn {
+    padding: 0.8rem 1.5rem;
+    border: none;
+    background: var(--medical-light);
+    border-radius: 0.5rem;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.tab-btn.active {
+    background: var(--medical-red);
     color: white;
 }
 
-.feature-card h3 {
-    font-size: 1.5rem;
-    margin-bottom: 1rem;
-    color: var(--dark);
-}
-
-/* Timeline */
-.pipeline {
-    padding: 5rem 0;
-    background: var(--light);
-}
-
-.timeline {
-    max-width: 800px;
-    margin: 0 auto;
-    position: relative;
-}
-
-.timeline::before {
-    content: '';
-    position: absolute;
-    left: 30px;
-    top: 0;
-    bottom: 0;
-    width: 4px;
-    background: var(--gradient);
-}
-
-.timeline-item {
-    display: flex;
-    margin-bottom: 3rem;
-    position: relative;
-}
-
-.timeline-marker {
-    width: 60px;
-    height: 60px;
+.tab-content {
+    display: none;
     background: white;
-    border: 4px solid var(--primary);
+    padding: 2rem;
+    border-radius: 1rem;
+    margin-top: 1rem;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.tab-content.active {
+    display: block;
+    animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.instructions {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+}
+
+.instruction-step {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+}
+
+.step-number {
+    background: var(--medical-green);
+    color: white;
+    width: 30px;
+    height: 30px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-weight: 700;
-    color: var(--primary);
-    margin-right: 2rem;
+    font-weight: bold;
     flex-shrink: 0;
-    z-index: 1;
 }
 
-.timeline-content {
+/* Алгоритми */
+.algorithm-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.algorithm-card {
     background: white;
     padding: 1.5rem;
-    border-radius: 0.5rem;
+    border-radius: 1rem;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-    flex: 1;
 }
 
-.timeline-content h3 {
-    color: var(--dark);
+.algorithm-card h3 {
+    color: var(--medical-dark);
+    margin-bottom: 1rem;
+}
+
+.algorithm-card ol {
+    margin-left: 1.5rem;
+}
+
+.algorithm-card li {
     margin-bottom: 0.5rem;
+    padding-left: 0.5rem;
 }
 
-/* Tech Stack */
-.tech {
-    padding: 5rem 0;
+/* Аптечка */
+.kit-items {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.kit-item {
     background: white;
+    padding: 1.5rem;
+    border-radius: 1rem;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
-.tech-grid {
+.kit-item i {
+    font-size: 2rem;
+    color: var(--medical-blue);
+    margin-bottom: 1rem;
+}
+
+.kit-item ul {
+    margin-left: 1.5rem;
+    margin-top: 1rem;
+}
+
+.kit-item li {
+    margin-bottom: 0.3rem;
+}
+
+/* Контакти */
+.emergency-contacts {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 2rem;
+    margin-top: 2rem;
 }
 
-.tech-item {
+.contact-card {
     text-align: center;
-    padding: 2rem;
+    padding: 1.5rem;
+    background: white;
     border-radius: 1rem;
-    background: var(--light);
-    transition: transform 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
-.tech-item:hover {
-    transform: scale(1.05);
-}
-
-.tech-item i {
-    color: var(--primary);
-    margin-bottom: 1rem;
-}
-
-.tech-item h3 {
-    margin-bottom: 0.5rem;
-    color: var(--dark);
-}
-
-/* Footer */
-.footer {
-    background: var(--dark);
-    color: white;
-    padding: 4rem 0 2rem;
-}
-
-.footer-content {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 3rem;
-    margin-bottom: 3rem;
-}
-
-.footer-section h3 {
-    font-size: 1.2rem;
-    margin-bottom: 1.5rem;
-    color: var(--gray-light);
-}
-
-.footer-link {
+.contact-icon {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-    color: var(--gray);
-    text-decoration: none;
-    margin-bottom: 0.5rem;
-    transition: color 0.3s ease;
+    justify-content: center;
+    margin: 0 auto 1rem;
+    font-size: 1.8rem;
 }
 
-.footer-link:hover {
+.contact-icon.emergency {
+    background: var(--medical-red);
     color: white;
 }
 
-.status-online {
-    color: var(--secondary);
-    font-weight: 600;
+.phone-number {
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--medical-red);
+    margin: 0.5rem 0;
 }
 
-.footer-bottom {
-    text-align: center;
-    padding-top: 2rem;
-    border-top: 1px solid #374151;
-    color: var(--gray);
+.disclaimer {
+    background: #fff3cd;
+    border-left: 4px solid var(--medical-yellow);
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    margin-top: 3rem;
 }
 
-/* Animations */
-@keyframes float {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
+.disclaimer h3 {
+    color: #856404;
+    margin-bottom: 0.5rem;
 }
 
-@keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.5; }
+/* CI/CD бейдж */
+.ci-cd-badge {
+    background: var(--medical-blue);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 2rem;
+    display: inline-block;
+    margin-top: 1rem;
+    font-size: 0.9rem;
 }
 
-/* Responsive */
+/* Адаптивність */
 @media (max-width: 768px) {
-    .hero .container {
-        grid-template-columns: 1fr;
-        text-align: center;
+    .nav-links {
+        display: none;
+    }
+    
+    .hero-title {
+        font-size: 2rem;
     }
     
     .hero-stats {
         grid-template-columns: 1fr;
     }
     
-    .nav-links {
-        display: none;
+    .injuries-tabs {
+        flex-direction: column;
     }
-    
-    .hero-title {
-        font-size: 2.5rem;
-    }
-    
-    .timeline::before {
-        left: 25px;
-    }
-    
-    .timeline-marker {
-        width: 50px;
-        height: 50px;
-        margin-right: 1rem;
-    }
-}
-
-/* Loading animation */
-.loading {
-    display: inline-block;
-    width: 20px;
-    height: 20px;
-    border: 3px solid var(--gray-light);
-    border-radius: 50%;
-    border-top-color: var(--primary);
-    animation: spin 1s ease-in-out infinite;
-}
-
-@keyframes spin {
-    to { transform: rotate(360deg); }
 }

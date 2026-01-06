@@ -1,147 +1,24 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Update time elements
-    function updateTimes() {
-        const now = new Date();
-        const timeOptions = {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric',
-            hour: '2-digit',
-            minute: '2-digit',
-            second: '2-digit',
-            hour12: false
-        };
-        
-        // Update deploy time
-        const deployTime = document.getElementById('deploy-time');
-        if (deployTime) {
-            deployTime.textContent = now.toLocaleTimeString('uk-UA', {
-                hour: '2-digit',
-                minute: '2-digit'
-            });
-        }
-        
-        // Update last update time
-        const lastUpdate = document.getElementById('last-update');
-        if (lastUpdate) {
-            lastUpdate.textContent = now.toLocaleString('uk-UA', timeOptions);
-        }
-        
-        // Update current time
-        const currentTime = document.getElementById('current-time');
-        if (currentTime) {
-            currentTime.textContent = now.toLocaleString('uk-UA', timeOptions);
-        }
-    }
+    // Таби для травм
+    const tabBtns = document.querySelectorAll('.tab-btn');
+    const tabContents = document.querySelectorAll('.tab-content');
     
-    // Simulate CI/CD status
-    function updateStatus() {
-        const statusElement = document.getElementById('status');
-        const statusDot = document.getElementById('server-status');
-        
-        if (statusElement && statusDot) {
-            // Random status for demo (90% success)
-            const isSuccess = Math.random() > 0.1;
+    tabBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            // Видалити активний клас у всіх
+            tabBtns.forEach(b => b.classList.remove('active'));
+            tabContents.forEach(c => c.classList.remove('active'));
             
-            if (isSuccess) {
-                statusElement.textContent = 'Успішно';
-                statusElement.style.color = '#10b981';
-                statusDot.className = 'status-online';
-                statusDot.textContent = '● Онлайн';
-            } else {
-                statusElement.textContent = 'В процесі...';
-                statusElement.style.color = '#f59e0b';
-                statusDot.className = 'status-online';
-                statusDot.textContent = '● В процесі';
-                
-                // Auto-recover after 3 seconds
-                setTimeout(() => {
-                    statusElement.textContent = 'Успішно';
-                    statusElement.style.color = '#10b981';
-                }, 3000);
-            }
-        }
-    }
-    
-    // Pipeline animation
-    function animatePipeline() {
-        const steps = document.querySelectorAll('.pipeline-step');
-        steps.forEach((step, index) => {
-            step.style.animationDelay = `${index * 0.5}s`;
-        });
-    }
-    
-    // Refresh button
-    const refreshBtn = document.getElementById('refresh-btn');
-    if (refreshBtn) {
-        refreshBtn.addEventListener('click', function() {
-            this.innerHTML = '<i class="fas fa-sync-alt fa-spin"></i> Оновлення...';
-            this.disabled = true;
+            // Додати активний клас натиснутій кнопці
+            btn.classList.add('active');
             
-            // Simulate API call
-            setTimeout(() => {
-                updateStatus();
-                updateTimes();
-                this.innerHTML = '<i class="fas fa-sync-alt"></i> Оновити статус';
-                this.disabled = false;
-                
-                // Show notification
-                showNotification('Статус оновлено успішно!');
-            }, 1500);
+            // Показати відповідний контент
+            const tabId = btn.getAttribute('data-tab');
+            document.getElementById(tabId).classList.add('active');
         });
-    }
+    });
     
-    // Show notification
-    function showNotification(message) {
-        // Create notification element
-        const notification = document.createElement('div');
-        notification.className = 'notification';
-        notification.innerHTML = `
-            <i class="fas fa-check-circle"></i>
-            <span>${message}</span>
-        `;
-        
-        // Add styles
-        notification.style.cssText = `
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: #10b981;
-            color: white;
-            padding: 1rem 1.5rem;
-            border-radius: 0.5rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-            z-index: 9999;
-            animation: slideIn 0.3s ease;
-        `;
-        
-        // Add animation
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes slideIn {
-                from { transform: translateX(100%); opacity: 0; }
-                to { transform: translateX(0); opacity: 1; }
-            }
-            @keyframes slideOut {
-                from { transform: translateX(0); opacity: 1; }
-                to { transform: translateX(100%); opacity: 0; }
-            }
-        `;
-        document.head.appendChild(style);
-        
-        document.body.appendChild(notification);
-        
-        // Remove after 3 seconds
-        setTimeout(() => {
-            notification.style.animation = 'slideOut 0.3s ease';
-            setTimeout(() => notification.remove(), 300);
-        }, 3000);
-    }
-    
-    // Smooth scrolling for navigation links
+    // Плавна прокрутка для навігації
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
             e.preventDefault();
@@ -158,37 +35,96 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     
-    // Initialize
-    updateTimes();
-    updateStatus();
-    animatePipeline();
+    // Активна навігація при скролі
+    const sections = document.querySelectorAll('section');
+    const navLinks = document.querySelectorAll('.nav-link');
     
-    // Update time every minute
-    setInterval(updateTimes, 60000);
-    
-    // Simulate status updates every 30 seconds
-    setInterval(updateStatus, 30000);
-    
-    // Add some interactivity to feature cards
-    document.querySelectorAll('.feature-card').forEach(card => {
-        card.addEventListener('mouseenter', () => {
-            card.style.transform = 'translateY(-10px)';
+    window.addEventListener('scroll', () => {
+        let current = '';
+        
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop;
+            const sectionHeight = section.clientHeight;
+            
+            if (pageYOffset >= sectionTop - 100) {
+                current = section.getAttribute('id');
+            }
         });
         
-        card.addEventListener('mouseleave', () => {
-            card.style.transform = 'translateY(0)';
+        navLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('href') === `#${current}`) {
+                link.classList.add('active');
+            }
         });
     });
     
-    // Add page load animation
-    document.body.style.opacity = '0';
-    document.body.style.transition = 'opacity 0.5s ease';
+    // Анімація статистики
+    const stats = document.querySelectorAll('.stat h3');
+    stats.forEach(stat => {
+        const originalText = stat.textContent;
+        stat.textContent = '0';
+        
+        let counter = 0;
+        const target = originalText.replace(/\D/g, '');
+        const increment = target / 50;
+        
+        const updateCounter = () => {
+            if (counter < target) {
+                counter += increment;
+                stat.textContent = Math.floor(counter) + originalText.replace(/[0-9]/g, '');
+                setTimeout(updateCounter, 20);
+            } else {
+                stat.textContent = originalText;
+            }
+        };
+        
+        // Запускати при попаданні в область видимості
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    updateCounter();
+                    observer.unobserve(entry.target);
+                }
+            });
+        });
+        
+        observer.observe(stat);
+    });
     
-    setTimeout(() => {
-        document.body.style.opacity = '1';
-    }, 100);
+    // Ефект для екстрених номерів
+    const phoneNumbers = document.querySelectorAll('.phone-number');
+    phoneNumbers.forEach(number => {
+        number.addEventListener('click', function() {
+            const tempInput = document.createElement('input');
+            tempInput.value = this.textContent;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempInput);
+            
+            // Візуальний ефект
+            const originalColor = this.style.color;
+            this.style.color = 'green';
+            setTimeout(() => {
+                this.style.color = originalColor;
+            }, 500);
+        });
+    });
     
-    // Console greeting
-    console.log('%c🚀 CI/CD Pipeline Demo', 'color: #6366f1; font-size: 18px; font-weight: bold;');
-    console.log('%cСайт автоматично деплоїться з GitHub на AWS!', 'color: #666;');
+    // Кнопка "Почати навчання"
+    const ctaButton = document.querySelector('.cta-button');
+    if (ctaButton) {
+        ctaButton.addEventListener('click', () => {
+            ctaButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Завантаження...';
+            setTimeout(() => {
+                ctaButton.innerHTML = '<i class="fas fa-book-medical"></i> Почати навчання';
+            }, 1500);
+        });
+    }
+    
+    // Консольне повідомлення
+    console.log('%c🏥 Сайт "Перша медична допомога"', 'color: #e63946; font-size: 18px; font-weight: bold;');
+    console.log('%cВаші знання можуть врятувати життя!', 'color: #457b9d;');
+    console.log('%c📞 Запам\'ятайте: Швидка - 103, Поліція - 102, Пожежна - 101', 'color: #2a9d8f;');
 });
